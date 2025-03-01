@@ -10,6 +10,8 @@ import org.springframework.web.client.RestTemplate;
 public class SmsConfig {
     @Bean
     public RestTemplate restTemplate() {
-        return new RestTemplate();
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.getMessageConverters().add(new SmsRequestConverter());
+        return restTemplate;
     }
 }

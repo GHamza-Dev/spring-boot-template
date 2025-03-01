@@ -17,6 +17,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 @Log4j2
@@ -109,15 +111,15 @@ public class SmsServiceImpl implements SmsService {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
-        SmsRequest request = SmsRequest.builder()
-                .login(smsProperties.getLogin())
-                .password(smsProperties.getPassword())
-                .oadc(smsProperties.getSender())
-                .msisdn_to(phoneNumber)
-                .body(message)
-                .build();
+        // Create a MultiValueMap instead of using SmsRequest directly
+        MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
+        formData.add("login", smsProperties.getLogin());
+        formData.add("password", smsProperties.getPassword());
+        formData.add("oadc", smsProperties.getSender());
+        formData.add("msisdn_to", phoneNumber);
+        formData.add("body", message);
 
-        HttpEntity<SmsRequest> entity = new HttpEntity<>(request, headers);
+        HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(formData, headers);
 
         try {
             ResponseEntity<String> response = restTemplate.postForEntity(
@@ -128,6 +130,7 @@ public class SmsServiceImpl implements SmsService {
 
             return xmlUtil.parseXmlResponse(response.getBody());
         } catch (Exception e) {
+            log.error("Failed to send SMS", e);
             throw new SmsServiceException("Failed to send SMS", e);
         }
     }
