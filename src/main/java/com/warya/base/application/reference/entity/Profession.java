@@ -4,5 +4,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "profession")
-public class Profession extends RefBaseEntity {}
+@Table(name = "PROFESSION")
+public class Profession extends RefBaseEntity {
+    public Profession() {}
+    public Profession(Long id) {
+        super(id);
+    }
+}

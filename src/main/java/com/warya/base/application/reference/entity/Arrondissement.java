@@ -7,10 +7,18 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "arrondissement")
+@Table(name = "ARRONDISSEMENT")
 @Getter
 @Setter
 public class Arrondissement extends RefBaseEntity {
     @ManyToOne
     private Province province;
+
+    public Arrondissement(Long id) {
+        super(id);
+    }
+
+    public Arrondissement() {
+
+    }
 }

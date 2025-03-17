@@ -4,5 +4,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "region")
-public class Region extends RefBaseEntity {}
+@Table(name = "REGION")
+public class Region extends RefBaseEntity {
+    public Region() {}
+    public Region(Long id) {
+        super(id);
+    }
+}

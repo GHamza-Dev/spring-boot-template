@@ -12,18 +12,15 @@ import lombok.Setter;
 @Setter
 public abstract class RefBaseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
     private String libelle;
-    private Double soldeResponsable;
-    private Double soldeInterne;
-    private Double soldeExterne;
     private String code;
-    private Double cotisation;
-    private String responsable;
-    private Integer nbrBureau;
-    private Integer nbrBureauVote;
-    private String statut;
     private Integer ordre;
+
+    public RefBaseEntity() {}
+
+    public RefBaseEntity(Long id) {
+        this.id = id;
+    }
 }

@@ -7,10 +7,15 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "province")
+@Table(name = "PROVINCE")
 @Getter
 @Setter
 public class Province extends RefBaseEntity {
     @ManyToOne
     private Region region;
+
+    public Province() {}
+    public Province(Long id) {
+        super(id);
+    }
 }

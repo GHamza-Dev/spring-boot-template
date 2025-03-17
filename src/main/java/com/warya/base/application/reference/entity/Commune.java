@@ -7,10 +7,16 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "commune")
+@Table(name = "COMMUNE")
 @Getter
 @Setter
 public class Commune extends RefBaseEntity {
     @ManyToOne
     private Province province;
+
+    public Commune() {}
+
+    public Commune(Long id) {
+        super(id);
+    }
 }

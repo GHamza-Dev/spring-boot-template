@@ -7,10 +7,16 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "cercle")
+@Table(name = "CERCLE")
 @Getter
 @Setter
 public class Cercle extends RefBaseEntity {
     @ManyToOne
     private Province province;
+
+    public Cercle() {}
+
+    public Cercle(Long id) {
+        super(id);
+    }
 }

@@ -4,5 +4,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "niveau_etude")
-public class NiveauEtude extends RefBaseEntity {}
+@Table(name = "NIVEAUETUDE")
+public class NiveauEtude extends RefBaseEntity {
+    public NiveauEtude() {}
+    public NiveauEtude(Long id) {
+        super(id);
+    }
+}
