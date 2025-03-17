@@ -22,6 +22,6 @@ public class WaryaBaseApplication implements CommandLineRunner {
 	@Override
 	@Profile("!prod")
 	public void run(String... args) throws Exception {
-		databaseInitializer.run(args);
+		//databaseInitializer.run(args);
 	}
 }
