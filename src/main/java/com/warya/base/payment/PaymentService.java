@@ -98,7 +98,7 @@ public class PaymentService {
         payload.put("lname", request.getLastName());
         payload.put("email", request.getEmail());
         payload.put("phone", request.getPhone());
-        payload.put("address", request.getAddress());
+        payload.put("address", "test");
         payload.put("city", request.getCity());
         payload.put("zipcode", request.getZipCode());
         payload.put("country", request.getCountry());
