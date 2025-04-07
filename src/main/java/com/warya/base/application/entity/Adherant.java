@@ -175,4 +175,7 @@ public class Adherant implements Serializable {
 		this.nom = nom;
 		this.prenom = prenom;
 	}
+
+	@Column(unique = true)
+	private String orderId;
 }

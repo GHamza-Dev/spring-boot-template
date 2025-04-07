@@ -1,1 +1,4 @@
 docker run --name mysql-container -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=waryabase -p 3306:3306 -d mysql:latest
+
+
+docker run --name mysql-container -e MYSQL_ROOT_PASSWORD=6fbH+3A4B86n -e MYSQL_DATABASE=adhesion -p 3306:3306 -d mysql:latest

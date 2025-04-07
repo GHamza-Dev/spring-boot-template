@@ -2,6 +2,7 @@ package com.warya.base.application.service;
 
 import com.warya.base.application.dto.AdherantRequest;
 import com.warya.base.common.exception.BusinessException;
+import com.warya.base.payment.dto.PaymentLinkResponse;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -19,7 +20,7 @@ public interface AdherantService {
      * @throws BusinessException If there's a business rule violation (e.g., CIN already exists)
      * @throws IOException If there's an issue processing the photo
      */
-    void createNewAdherant(AdherantRequest request, MultipartFile photo) throws BusinessException, IOException;
+    PaymentLinkResponse createNewAdherant(AdherantRequest request, MultipartFile photo) throws BusinessException, IOException;
     
     /**
      * Checks if an adherant with the given CIN already exists.

@@ -4,11 +4,13 @@ import com.warya.base.application.dto.AdherantRequest;
 import com.warya.base.application.entity.Adherant;
 import com.warya.base.application.service.AdherantService;
 import com.warya.base.common.exception.BusinessException;
+import com.warya.base.payment.dto.PaymentLinkResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,13 +24,12 @@ public class AdherantController {
     private final AdherantService adherantService;
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Adherant> createAdherant(
-            @RequestPart("adherant") AdherantRequest adherantData,
+    public ResponseEntity<PaymentLinkResponse> createAdherant(
+            @RequestPart("adherant") @Validated AdherantRequest adherantData,
             @RequestPart(value = "photo", required = false) MultipartFile photo) 
             throws BusinessException, IOException {
         log.info("Creating new adherant with CIN: {}", adherantData.getCin());
-        adherantService.createNewAdherant(adherantData, photo);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.ok(adherantService.createNewAdherant(adherantData, photo));
     }
 
     @GetMapping("/check-cin/{cin}")

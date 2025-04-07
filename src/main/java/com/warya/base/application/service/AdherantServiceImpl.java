@@ -6,6 +6,9 @@ import com.warya.base.application.entity.PhotoAdherent;
 import com.warya.base.application.reference.repository.*;
 import com.warya.base.application.repository.AdherantRepository;
 import com.warya.base.common.exception.BusinessException;
+import com.warya.base.payment.PaymentService;
+import com.warya.base.payment.PaymentUtilService;
+import com.warya.base.payment.dto.PaymentLinkResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,13 +32,15 @@ public class AdherantServiceImpl implements AdherantService {
     private final ArrondissementRepository arrondissementRepository;
     private final CercleRepository cercleRepository;
     private final SecteurRepository secteurRepository;
+    private final PaymentService paymentService;
+    private final PaymentUtilService paymentUtilService;
 
     @Value("${adherant.photo.max-size}")
     private long maxPhotoSize;
 
     @Override
     @Transactional
-    public void createNewAdherant(AdherantRequest request, MultipartFile photo) throws BusinessException, IOException {
+    public PaymentLinkResponse createNewAdherant(AdherantRequest request, MultipartFile photo) throws BusinessException, IOException {
         if (request == null) {
             throw new BusinessException("adherant_data_required", HttpStatus.BAD_REQUEST);
         }
@@ -53,7 +58,14 @@ public class AdherantServiceImpl implements AdherantService {
             processPhoto(adherant, photo);
         }
 
+        String orderId = paymentUtilService.generatePaymentOrderRef("ORD-");
+        adherant.setOrderId(orderId);
+
         adherantRepository.save(adherant);
+
+        return paymentService.createPaymentLink(
+                paymentUtilService.initiatePaymentLinkRequest(adherant, orderId)
+        );
     }
 
     @Override
